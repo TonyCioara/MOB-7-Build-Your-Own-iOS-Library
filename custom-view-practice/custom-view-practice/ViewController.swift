@@ -13,7 +13,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        addPatternView()
+        addPrettySunLayer()
         
     }
 
@@ -27,6 +27,71 @@ class ViewController: UIViewController {
         view.backgroundColor = UIColor.red
         self.view.addSubview(view)
     }
+    
+    //  Practice #2
+    
+    func addGradientLayer() {
+        
+        let gradient = CAGradientLayer()
+        
+        gradient.frame = self.view.bounds
+        
+        let color1 = UIColor(red: 252/255, green: 217/255, blue: 97/255, alpha: 1)
+        let color2 = UIColor(red: 247/255, green: 107/255, blue: 28/255, alpha: 1)
+
+        gradient.colors = [color1.cgColor, color2.cgColor]
+        
+        self.view.layer.addSublayer(gradient)
+    }
+    
+    func addPrettySunLayer() {
+        
+//        Draw sky gradient
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.frame = self.view.bounds
+        
+        let color1 = UIColor.white
+        let color2 = UIColor.cyan
+        
+        gradientLayer.colors = [color1.cgColor, color2.cgColor]
+        
+        gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.0)
+        gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.5)
+        
+        self.view.layer.addSublayer(gradientLayer)
+        
+//        Draw Sun
+        let sunPath = UIBezierPath(arcCenter: CGPoint(x: self.view.frame.width / 3 * 2, y: 100), radius: 50, startAngle: CGFloat(0), endAngle: CGFloat.pi * 2, clockwise: true)
+        
+        let sunLayer = CAShapeLayer()
+        sunLayer.path = sunPath.cgPath
+        
+        sunLayer.fillColor = UIColor.yellow.cgColor
+        sunLayer.shadowColor = UIColor.yellow.cgColor
+        sunLayer.shadowRadius = 20
+        sunLayer.shadowOpacity = 0.8
+        
+        self.view.layer.addSublayer(sunLayer)
+        
+//        Draw cliffs
+        let cliff1Path = UIBezierPath()
+        cliff1Path.move(to: CGPoint(x: 0, y: self.view.frame.height / 5 * 3))
+        cliff1Path.addCurve(to: CGPoint(x: self.view.frame.width / 2, y: self.view.frame.height / 5 * 4), controlPoint1: CGPoint(x: self.view.frame.width / 2 - 40, y: self.view.frame.height / 5 * 4 - 40), controlPoint2: CGPoint(x: 40, y: self.view.frame.height / 5 * 4))
+        cliff1Path.addCurve(to: CGPoint(x: self.view.frame.width, y: self.view.frame.height / 5 * 3), controlPoint1: CGPoint(x: self.view.frame.width / 5 * 4, y: self.view.frame.height / 5 * 4 + 40), controlPoint2: CGPoint(x: self.view.frame.width / 2, y: self.view.frame.height / 5 * 3))
+        cliff1Path.addLine(to: CGPoint(x: self.view.frame.width, y: self.view.frame.height))
+        cliff1Path.addLine(to: CGPoint(x: 0, y: self.view.frame.height))
+        cliff1Path.close()
+        
+        let cliff1Shape = CAShapeLayer()
+        cliff1Shape.path = cliff1Path.cgPath
+        cliff1Shape.fillColor = UIColor.brown.cgColor
+        cliff1Shape.strokeColor = UIColor.red.cgColor
+        cliff1Shape.lineWidth = 5
+        
+        self.view.layer.addSublayer(sunLayer)
+    }
+    
+    //  Practice #1
 
     func addChessView() {
         var xPos: CGFloat = 0
