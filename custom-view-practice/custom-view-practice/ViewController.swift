@@ -75,6 +75,7 @@ class ViewController: UIViewController {
         
 //        Draw cliffs
         let cliff1Path = UIBezierPath()
+        
         cliff1Path.move(to: CGPoint(x: 0, y: self.view.frame.height / 5 * 3))
         cliff1Path.addCurve(to: CGPoint(x: self.view.frame.width / 2, y: self.view.frame.height / 5 * 4), controlPoint1: CGPoint(x: self.view.frame.width / 2 - 40, y: self.view.frame.height / 5 * 4 - 40), controlPoint2: CGPoint(x: 40, y: self.view.frame.height / 5 * 4))
         cliff1Path.addCurve(to: CGPoint(x: self.view.frame.width, y: self.view.frame.height / 5 * 3), controlPoint1: CGPoint(x: self.view.frame.width / 5 * 4, y: self.view.frame.height / 5 * 4 + 40), controlPoint2: CGPoint(x: self.view.frame.width / 2, y: self.view.frame.height / 5 * 3))
@@ -85,10 +86,10 @@ class ViewController: UIViewController {
         let cliff1Shape = CAShapeLayer()
         cliff1Shape.path = cliff1Path.cgPath
         cliff1Shape.fillColor = UIColor.brown.cgColor
-        cliff1Shape.strokeColor = UIColor.red.cgColor
-        cliff1Shape.lineWidth = 5
+//        cliff1Shape.strokeColor = UIColor.red.cgColor
+//        cliff1Shape.lineWidth = 5
         
-        self.view.layer.addSublayer(sunLayer)
+        self.view.layer.addSublayer(cliff1Shape)
     }
     
     //  Practice #1
