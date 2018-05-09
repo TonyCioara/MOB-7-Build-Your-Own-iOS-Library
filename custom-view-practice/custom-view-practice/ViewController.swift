@@ -13,7 +13,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        addPrettySunLayer()
+        addAnimatedBoxesWithBounceAndLabels()
         
     }
 
@@ -26,6 +26,86 @@ class ViewController: UIViewController {
         let view = UIView(frame: CGRect(x: 20, y: 20, width: self.view.frame.width - 40, height: self.view.frame.height - 40))
         view.backgroundColor = UIColor.red
         self.view.addSubview(view)
+    }
+    
+    //  Practice #3
+    
+    func addAnimatedBoxes() {
+        
+        var xPosition: CGFloat = 0
+        var hue: CGFloat = 0.0
+        for i in 0...5 {
+            let view = UIView(frame: CGRect(x: xPosition, y: self.view.frame.height, width: self.view.frame.width / 5, height: self.view.frame.width / 5))
+            view.backgroundColor = UIColor(hue: hue, saturation: 1, brightness: 1, alpha: 1)
+            hue += 0.2
+            
+            self.view.addSubview(view)
+            
+            let label = UILabel(frame: CGRect(x: 0, y: 0, width: self.view.frame.width / 5, height: self.view.frame.width / 5))
+            label.text = String(i + 1)
+            label.textAlignment = .center
+            label.font = UIFont(name: ".SFUIText-Medium", size: 34)!
+            label.textColor = .white
+            
+            view.addSubview(label)
+            
+            UIView.animate(withDuration: 0.5, delay: TimeInterval(i) * 0.3, options: [], animations: {
+                view.frame = CGRect(x: xPosition, y: self.view.frame.height - self.view.frame.width / 5, width: self.view.frame.width / 5, height: self.view.frame.width / 5)
+            }, completion: nil)
+            
+            xPosition += self.view.frame.width / 5
+        }
+    }
+    
+    func addAnimatedBoxesWithBounce() {
+        
+        var xPosition: CGFloat = 0
+        var hue: CGFloat = 0.0
+        for i in 0...5 {
+            let view = UIView(frame: CGRect(x: xPosition, y: self.view.frame.height, width: self.view.frame.width / 5, height: self.view.frame.width / 5))
+            view.backgroundColor = UIColor(hue: hue, saturation: 1, brightness: 1, alpha: 1)
+            hue += 0.2
+            
+            self.view.addSubview(view)
+            
+            let label = UILabel(frame: CGRect(x: 0, y: 0, width: self.view.frame.width / 5, height: self.view.frame.width / 5))
+            label.text = String(i + 1)
+            label.textAlignment = .center
+            label.font = UIFont(name: ".SFUIText-Medium", size: 34)!
+            label.textColor = .white
+            
+            view.addSubview(label)
+            
+            UIView.animate(withDuration: 0.5, delay: TimeInterval(i) * 0.3, usingSpringWithDamping: 0.2, initialSpringVelocity: 0.1, options: [], animations: {
+                view.frame = CGRect(x: xPosition, y: self.view.frame.height - self.view.frame.width / 5, width: self.view.frame.width / 5, height: self.view.frame.width / 5)
+            }, completion: nil)
+            
+            xPosition += self.view.frame.width / 5
+        }
+    }
+    
+    func addAnimatedBoxesWithBounceAndLabels() {
+        
+        addAnimatedBoxesWithBounce()
+        
+        let lightGrayLabelView = UILabel(frame: CGRect(x: 0, y: self.view.frame.height - self.view.frame.width / 5 - 30, width: self.view.frame.width, height: 30))
+        
+        let darkGrayLabelView = UILabel(frame: CGRect(x: 0, y: self.view.frame.height - self.view.frame.width / 5 - 60, width: self.view.frame.width, height: 30))
+        
+        darkGrayLabelView.backgroundColor = UIColor.lightGray
+        darkGrayLabelView.text = " This is a bold title"
+        darkGrayLabelView.font = UIFont(name: ".SFUIText-Bold", size: 18)!
+        darkGrayLabelView.textColor = .black
+        
+        lightGrayLabelView.backgroundColor = UIColor.lightGray.withAlphaComponent(0.5)
+        lightGrayLabelView.text = " Some subtitle text "
+        lightGrayLabelView.font = UIFont(name: ".SFUIText", size: 18)!
+        lightGrayLabelView.textAlignment = .right
+        lightGrayLabelView.textColor = .black
+        
+        self.view.addSubview(lightGrayLabelView)
+        self.view.addSubview(darkGrayLabelView)
+        
     }
     
     //  Practice #2
