@@ -13,7 +13,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        addAnimatedBoxesWithBounceAndLabels()
+        addCrazyView()
         
     }
 
@@ -22,13 +22,37 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    func addRedView() {
-        let view = UIView(frame: CGRect(x: 20, y: 20, width: self.view.frame.width - 40, height: self.view.frame.height - 40))
-        view.backgroundColor = UIColor.red
-        self.view.addSubview(view)
-    }
+    
+
     
     //  Practice #3
+    
+    func addCrazyView() {
+        
+        let view = UIView(frame: CGRect(x: 20, y: 20, width: self.view.frame.width - 40, height: self.view.frame.height - 40))
+        view.layer.cornerRadius = 15
+        view.backgroundColor = .red
+        self.view.addSubview(view)
+        
+        UIView.animateKeyframes(withDuration: 5.0, delay: 0, options: [], animations: {
+            UIView.addKeyframe(withRelativeStartTime: 0.1, relativeDuration: 0.05, animations: {
+                view.frame = CGRect(x: self.view.frame.width / 2 - 15, y: self.view.frame.height / 2 - 15, width: 30, height: 30)
+            })
+            UIView.addKeyframe(withRelativeStartTime: 0.3, relativeDuration: 0.05, animations: {
+                view.frame = CGRect(x: self.view.frame.width / 2 - 15, y: (self.view.frame.height - self.view.frame.width * 7 / 8) / 2, width: 30, height: 50)
+            })
+            UIView.addKeyframe(withRelativeStartTime: 0.5, relativeDuration: 0.05, animations: {
+                view.frame = CGRect(x: self.view.frame.width / 16, y: (self.view.frame.height - self.view.frame.width * 7 / 8) / 2, width: self.view.frame.width * 7 / 8, height: 50)
+            })
+            UIView.addKeyframe(withRelativeStartTime: 0.7, relativeDuration: 0.05, animations: {
+                view.frame = CGRect(x: self.view.frame.width / 16, y: (self.view.frame.height - self.view.frame.width * 7 / 8) / 2, width: self.view.frame.width * 7 / 8, height: self.view.frame.width * 7 / 8)
+            })
+            UIView.addKeyframe(withRelativeStartTime: 0.9, relativeDuration: 0.05, animations: {
+                view.frame = CGRect(x: self.view.frame.width / 2 - 15, y: self.view.frame.height - 90, width: 30, height: 30)
+                view.backgroundColor = .cyan
+            })
+        }, completion: nil)
+    }
     
     func addAnimatedBoxes() {
         
@@ -61,7 +85,7 @@ class ViewController: UIViewController {
         
         var xPosition: CGFloat = 0
         var hue: CGFloat = 0.0
-        for i in 0...5 {
+        for i in 0...4 {
             let view = UIView(frame: CGRect(x: xPosition, y: self.view.frame.height, width: self.view.frame.width / 5, height: self.view.frame.width / 5))
             view.backgroundColor = UIColor(hue: hue, saturation: 1, brightness: 1, alpha: 1)
             hue += 0.2
@@ -96,16 +120,51 @@ class ViewController: UIViewController {
         darkGrayLabelView.text = " This is a bold title"
         darkGrayLabelView.font = UIFont(name: ".SFUIText-Bold", size: 18)!
         darkGrayLabelView.textColor = .black
+        darkGrayLabelView.alpha = 0.0
         
         lightGrayLabelView.backgroundColor = UIColor.lightGray.withAlphaComponent(0.5)
         lightGrayLabelView.text = " Some subtitle text "
         lightGrayLabelView.font = UIFont(name: ".SFUIText", size: 18)!
         lightGrayLabelView.textAlignment = .right
         lightGrayLabelView.textColor = .black
+        lightGrayLabelView.alpha = 0.0
         
         self.view.addSubview(lightGrayLabelView)
         self.view.addSubview(darkGrayLabelView)
         
+        UIView.animate(withDuration: 0.7, delay: 1.3, options: UIViewAnimationOptions(), animations: {
+            darkGrayLabelView.alpha = 1.0
+        }, completion: nil)
+        
+        UIView.animate(withDuration: 0.6, delay: 1.6, options: UIViewAnimationOptions(), animations: {
+            lightGrayLabelView.alpha = 1.0
+        }, completion: nil)
+        
+        
+//        let gradientView = UIView(frame: CGRect(x: 0, y: self.view.frame.height - self.view.frame.width / 5 - 65, width: 0, height: 5))
+        let gradientView = UIView(frame: CGRect(x: 0 - self.view.frame.width, y: self.view.frame.height - self.view.frame.width / 5 - 65, width: self.view.frame.width, height: 5))
+        
+        let gradient = CAGradientLayer()
+        
+        let color1 = UIColor(red: 252/255, green: 217/255, blue: 97/255, alpha: 1)
+        let color2 = UIColor(red: 247/255, green: 107/255, blue: 28/255, alpha: 1)
+        
+        gradient.startPoint = CGPoint(x: 0.0, y: 0.5)
+        gradient.endPoint = CGPoint(x: 1.0, y: 0.5)
+        
+        gradient.colors = [color1.cgColor, color2.cgColor]
+        
+        gradient.frame = gradientView.bounds
+        
+        gradientView.layer.addSublayer(gradient)
+        self.view.addSubview(gradientView)
+        
+        UIView.animate(withDuration: 0.7, delay: 2.0, options: UIViewAnimationOptions(), animations: {
+            gradientView.frame = CGRect(x: 0, y: self.view.frame.height - self.view.frame.width / 5 - 65, width: self.view.frame.width, height: 5)
+        }, completion: nil)
+        
+        
+
     }
     
     //  Practice #2
@@ -173,6 +232,12 @@ class ViewController: UIViewController {
     }
     
     //  Practice #1
+    
+    func addRedView() {
+        let view = UIView(frame: CGRect(x: 20, y: 20, width: self.view.frame.width - 40, height: self.view.frame.height - 40))
+        view.backgroundColor = UIColor.red
+        self.view.addSubview(view)
+    }
 
     func addChessView() {
         var xPos: CGFloat = 0
@@ -250,6 +315,44 @@ class ViewController: UIViewController {
             }
             xPos = squareWidthOver3
             yPos += squareWidth + squareWidthOver3
+        }
+    }
+    
+    //    My animations
+    
+    func fillScreenWithBoxes() {
+        
+        self.view.backgroundColor = .black
+        
+        //        let gradient = CAGradientLayer()
+        //
+        //        let color1 = UIColor(red: 252/255, green: 217/255, blue: 97/255, alpha: 1)
+        //        let color2 = UIColor(red: 247/255, green: 107/255, blue: 28/255, alpha: 1)
+        //
+        //        gradient.startPoint = CGPoint(x: 0.0, y: 0.5)
+        //        gradient.endPoint = CGPoint(x: 1.0, y: 0.5)
+        //        gradient.colors = [color1.cgColor, color2.cgColor]
+        
+        var count = 0
+        var yPosition: CGFloat = 0
+        
+        while yPosition < self.view.frame.height {
+            
+            let view = UIView(frame: CGRect(x: 0, y: yPosition + self.view.frame.height, width: self.view.frame.width, height: self.view.frame.height / 200))
+            
+            //            gradient.frame = view.bounds
+            //            view.layer.addSublayer(gradient)
+            view.backgroundColor = .white
+            
+            self.view.addSubview(view)
+            
+            UIView.animate(withDuration: 1.0, delay: TimeInterval(count) * 0.01, options: [.curveEaseIn], animations: {
+                view.frame = CGRect(x: 0, y: yPosition, width: self.view.frame.width, height: self.view.frame.height / 200)
+            }, completion: nil)
+            
+            count += 1
+            
+            yPosition += self.view.frame.height / 200
         }
     }
 
